@@ -2,6 +2,9 @@
 
 A learning project for building a multi-agent system where a supervisor coordinates specialized workers.
 
+## Build Progress
+See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
+
 ## Current Scope
 - Day 1 learning notes
 - Basic Gemini LLM call from Python
