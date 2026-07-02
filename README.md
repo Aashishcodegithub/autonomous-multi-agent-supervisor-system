@@ -1,37 +1,61 @@
 # Autonomous Multi-Agent Supervisor System
 
-A learning project for building a multi-agent system where a supervisor coordinates specialized workers.
+A production-grade LangGraph multi-agent system where a supervisor agent 
+autonomously decomposes tasks and routes them to specialized worker agents — 
+built from scratch, deployed on AWS. No shortcuts.
 
-## Current Scope
-- Day 1 learning notes
-- Basic Gemini LLM call from Python
-- Environment-based API key loading
+## Current Status
+🔨 **In Progress — Day 2/30**
+
+## Build Progress
+See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
+
+| Day | What Was Built |
+|-----|---------------|
+| Day 1 | First LLM call via Gemini + LangChain |
+| Day 2 | Dynamic prompt templates + LangChain pipe operator |
+
+## Tech Stack
+- **Framework:** LangChain, LangGraph (upcoming)
+- **LLM:** Google Gemini (gemini-3.5-flash)
+- **Cloud:** AWS (upcoming — Lambda, S3, DynamoDB)
+- **Language:** Python 3.9+
 
 ## Project Structure
-- `Learning/day1_llm_call.py` - simple Gemini API call
-- `Learning/.env` - local API key file, not committed to Git
-- `ASCENSION_LOG(Devlog).md` - session log
+- `Learning/day1_llm_call.py` — first LLM call via LangChain
+- `Learning/day2_prompt_template.py` — dynamic prompt templates
+- `ASCENSION_LOG(Devlog).md` — daily build log
+- `Learning/.env` — local API key (not committed)
 
 ## Setup
-1. Create a virtual environment:
-   ```bash
+1. Create virtual environment:
+```bash
    python3 -m venv .venv
    source .venv/bin/activate
-   ```
+```
 2. Install dependencies:
-   ```bash
-   pip install python-dotenv google-genai
-   ```
-3. Add your Gemini API key to `Learning/.env`:
-   ```env
+```bash
+   pip install langchain-google-genai python-dotenv
+```
+3. Add Gemini API key to `Learning/.env`:
+```env
    GOOGLE_API_KEY=your_key_here
-   ```
+```
 
 ## Run
 ```bash
-python Learning/day1_llm_call.py
+python3.9 Learning/day2_prompt_template.py
 ```
 
 ## Notes
-- `Learning/.env` is ignored by Git.
-- The script loads `.env` from the `Learning` folder, so it can run from the repo root.
+- `Learning/.env` is git-ignored — never committed
+- LLM-agnostic design — can swap Gemini for Claude or GPT in one line
+## Build Progress
+See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
+
+## Current Status
+🔨 **In Progress — Day 2/30**
+
+### What's been built so far:
+- Day 1: First LLM call via Gemini + LangChain
+- Day 2: Dynamic prompt templates + LangChain pipe operator
