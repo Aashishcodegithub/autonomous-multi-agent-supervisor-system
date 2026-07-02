@@ -22,7 +22,7 @@ try:
         contents='What is a multi-agent system?',
         config=types.GenerateContentConfig(
             temperature=0.7,
-            max_output_tokens=256,
+            max_output_tokens=1024,
         ),
     )
     print(response.text)
