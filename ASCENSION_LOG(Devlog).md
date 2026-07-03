@@ -26,5 +26,18 @@ No zero days.
 - The | operator chains components together
 - .env path handling relative to file location
 
-**Tomorrow's plan:**
-- Tools — give the LLM the ability to actually DO something
+## Day 3 — July 3, 2026
+> **Quote of the Day:** "Motivation, Pain, Failure is a temporary variable in life. Replace that with hard work it becomes a const variable assigned to Success."
+> `const success = hardWork;` — no reassignment possible.
+> *— Aashish Kumar Singh*
+
+**What I built:**
+- First LangGraph Agent using `create_react_agent`
+- Created `@tool` decorated functions for math and mock APIs
+- Attached tools to the LLM so it can execute them
+- Streamed multi-step reasoning logs to the terminal
+
+**What I learned:**
+- Agents can reason about whether to call a tool or answer normally
+- LangGraph is the modern framework for orchestrating LLM tool calling
+- Tools require good docstrings because that's how the LLM knows when to use them
