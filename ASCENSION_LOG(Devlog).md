@@ -41,3 +41,22 @@ No zero days.
 - Agents can reason about whether to call a tool or answer normally
 - LangGraph is the modern framework for orchestrating LLM tool calling
 - Tools require good docstrings because that's how the LLM knows when to use them
+## Day 4 — July 4, 2026
+**What I built:**
+- Interactive calculator agent that runs until "calculation done"
+- 4 arithmetic tools: add, subtract, multiply, divide
+- Agent maintains conversation history across turns
+- Handled Gemini rate limits (429 error) — switched models
+
+**What I learned:**
+- ReAct loop: Reason → Act → Observe → Reason again
+- create_react_agent builds a 3-node graph internally (agent → tool → agent)
+- Streaming loop yields each step as it happens
+- Free tier limits: gemini-3.5-flash = 20 requests/day
+- messages list grows with each turn = agent memory
+
+**Tomorrow's plan:**
+- Learn LangGraph state management
+- Build first custom graph manually (no create_react_agent shortcut)
+
+**Quote of the day:**Today I didn't bring everything I had. The fire was low, the focus scattered, and I know it. But I showed up anyway — gym done, agent built, quests logged. Some days the grind isn't glorious. This was one of them. I'm writing this so future me remembers: even bad days got done. That's the standard. No zeros, no excuses — just forward.
