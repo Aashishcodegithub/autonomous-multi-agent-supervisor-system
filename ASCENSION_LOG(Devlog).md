@@ -59,4 +59,5 @@ No zero days.
 - Learn LangGraph state management
 - Build first custom graph manually (no create_react_agent shortcut)
 
-**Quote of the day:**Today I didn't bring everything I had. The fire was low, the focus scattered, and I know it. But I showed up anyway — gym done, agent built, quests logged. Some days the grind isn't glorious. This was one of them. I'm writing this so future me remembers: even bad days got done. That's the standard. No zeros, no excuses — just forward.
+> **Quote of the Day:** "Today I didn't bring everything I had. The fire was low, the focus scattered, and I know it. But I showed up anyway — gym done, agent built, quests logged. Some days the grind isn't glorious. This was one of them. I'm writing this so future me remembers: even bad days got done. That's the standard. No zeros, no excuses — just forward."
+> *— Aashish Kumar Singh*
