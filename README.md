@@ -5,7 +5,7 @@ autonomously decomposes tasks and routes them to specialized worker agents —
 built from scratch, deployed on AWS. No shortcuts.
 
 ## Current Status
-🔨 **In Progress — Day 4/30**
+🔨 **In Progress — Day 5/30**
 
 ## Build Progress
 See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
@@ -16,6 +16,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 | Day 2 | Dynamic prompt templates + LangChain pipe operator |
 | Day 3 | Tools and Agents using LangGraph |
 | Day 4 | Interactive calculator agent with conversation history |
+| Day 5 | Custom manual state graph using LangGraph |
 
 ## Tech Stack
 - **Framework:** LangChain, LangGraph
@@ -28,6 +29,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 - `Learning/day2_prompt_template.py` — dynamic prompt templates
 - `Learning/day3_tools_and_agents.py` — tool calling and react agents using LangGraph
 - `Learning/day4_interative_agent.py` — interactive calculator agent
+- `Learning/day5_manual_state_graph.py` — custom manual state graph with drafter and reviewer nodes
 - `ASCENSION_LOG(Devlog).md` — daily build log
 - `Learning/.env` — local API key (not committed)
 
@@ -59,10 +61,11 @@ python Learning/day4_interative_agent.py
 See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 
 ## Current Status
-🔨 **In Progress — Day 4/30**
+🔨 **In Progress — Day 5/30**
 
 ### What's been built so far:
 - Day 1: First LLM call via Gemini + LangChain
 - Day 2: Dynamic prompt templates + LangChain pipe operator
 - Day 3: Tools and React Agents using LangGraph
 - Day 4: Interactive calculator agent with conversation history
+- Day 5: Custom manual state graph using LangGraph

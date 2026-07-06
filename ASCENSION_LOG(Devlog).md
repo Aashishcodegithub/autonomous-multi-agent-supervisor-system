@@ -61,3 +61,21 @@ No zero days.
 
 > **Quote of the Day:** "Today I didn't bring everything I had. The fire was low, the focus scattered, and I know it. But I showed up anyway — gym done, agent built, quests logged. Some days the grind isn't glorious. This was one of them. I'm writing this so future me remembers: even bad days got done. That's the standard. No zeros, no excuses — just forward."
 > *— Aashish Kumar Singh*
+
+## Day 5 — July 6, 2026
+**What I built:**
+- First custom state graph using LangGraph's `StateGraph`
+- Manual workflow with `drafter` and `reviewer` nodes
+- Defined a `TypedDict` to pass state (`topic`, `draft`, `review`) between nodes
+
+**What I learned:**
+- `StateGraph` requires a typed dictionary to define the state schema.
+- Nodes are just Python functions that return a dict to update the state.
+- Workflows must be compiled into a runnable application before invoking.
+
+**Tomorrow's plan:**
+- Build a Supervisor agent that routes tasks to different workers
+- Combine multiple agents into a single graph
+
+> **Quote of the Day:** "Small steps every day. The state graph is the foundation of complex reasoning loops."
+> *— Aashish Kumar Singh*
