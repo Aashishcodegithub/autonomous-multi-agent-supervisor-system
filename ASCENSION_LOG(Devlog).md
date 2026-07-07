@@ -62,7 +62,7 @@ No zero days.
 > **Quote of the Day:** "Today I didn't bring everything I had. The fire was low, the focus scattered, and I know it. But I showed up anyway — gym done, agent built, quests logged. Some days the grind isn't glorious. This was one of them. I'm writing this so future me remembers: even bad days got done. That's the standard. No zeros, no excuses — just forward."
 > *— Aashish Kumar Singh*
 
-## Day 5 — July 6, 2026
+## Day 5 — July 5, 2026
 **What I built:**
 - First custom state graph using LangGraph's `StateGraph`
 - Manual workflow with `drafter` and `reviewer` nodes

@@ -61,7 +61,7 @@ python Learning/day4_interative_agent.py
 See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 
 ## Current Status
-🔨 **In Progress — Day 5/30**
+🔨 **In Progress — Day 6/30**
 
 ### What's been built so far:
 - Day 1: First LLM call via Gemini + LangChain
