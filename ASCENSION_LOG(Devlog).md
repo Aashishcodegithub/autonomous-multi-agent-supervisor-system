@@ -79,3 +79,29 @@ No zero days.
 
 > **Quote of the Day:** "Small steps every day. The state graph is the foundation of complex reasoning loops."
 > *— Aashish Kumar Singh*
+
+## Day 6 — July 6, 2026
+**What I built:**
+- Supervisor multi-agent graph in LangGraph.
+- Integrated `math_worker` and `writer_worker` nodes.
+- Structured routing schema using Pydantic output parsing for routing decisions.
+- Cascade worker chaining (`math_worker` -> `writer_worker` -> `END`) to minimize LLM supervisor cycles.
+
+![Supervisor Architecture](architecture.png)
+
+**What I learned:**
+- Subclassing `ChatGoogleGenerativeAI` is a safe way to override the `invoke` method for transparent rate-limiting and retry logic, fully compatible with Pydantic v2.
+- Direct worker chaining reduces routing calls, dramatically speeding up multi-step tasks.
+
+## Day 7 — July 7, 2026
+**What I built:**
+- Persistent conversational memory system using LangGraph's `MemorySaver` checkpointer.
+- Programmatic multi-turn conversation that retains user state (e.g. name) across distinct execution boundaries.
+- Clean message stripping logic that extracts plain text from list/metadata-heavy messages to minimize token usage.
+
+**What I learned:**
+- LangGraph's `MemorySaver` preserves the state of the conversation seamlessly by assigning a `thread_id`.
+- Stripping thinking metadata, signatures, and extra dictionary formatting from message payload reduces token usage by 90%, preventing resource exhaustion on the free tier.
+
+> **Quote of the Day:** "Optimize the constraints. When API limits push back, smarter routing and cleaner context are the way forward."
+> *— Aashish Kumar Singh*

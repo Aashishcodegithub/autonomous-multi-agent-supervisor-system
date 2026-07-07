@@ -18,11 +18,11 @@ if not api_key:
 client = genai.Client(api_key=api_key)
 try:
     response = client.models.generate_content(
-        model='gemini-3.5-flash',
+        model='gemini-1.5-flash',
         contents='What is a multi-agent system?',
         config=types.GenerateContentConfig(
             temperature=0.7,
-            max_output_tokens=1024,
+            max_output_tokens=500,
         ),
     )
     print(response.text)
