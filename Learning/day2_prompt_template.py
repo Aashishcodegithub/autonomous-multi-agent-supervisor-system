@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=Path(__file__).with_name('.env'))
 
-llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash")
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
 # Prompt template with variables
 prompt = ChatPromptTemplate.from_messages([
