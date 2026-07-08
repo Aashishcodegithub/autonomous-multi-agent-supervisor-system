@@ -105,3 +105,17 @@ No zero days.
 
 > **Quote of the Day:** "Optimize the constraints. When API limits push back, smarter routing and cleaner context are the way forward."
 > *— Aashish Kumar Singh*
+## Day 8 — July 8, 2026
+**What I built:**
+- Human-in-the-Loop (HITL) safety gating using LangGraph compilation breakpoints.
+- Configured graph to pause execution automatically using `interrupt_before=["math_worker"]` prior to entering expensive tool loops.
+- Terminal-based approval gateway that reads the graph state snapshot (`app.get_state`), logs the Supervisor's intent, and prompts for manual approval (`y/n`) or corrections before resuming.
+
+**What I learned:**
+- Production-grade agents require deterministic boundaries. Breakpoints act as safety gates to prevent runaway LLM execution loops and burning API credits.
+- `app.get_state(config)` allows deep state-inspection mid-flight, and passing `None` back into `app.stream()` seamlessly resumes execution exactly where the graph intercepted itself.
+
+**Tomorrow's plan:**
+- Dive deeper into dynamic state updates or custom error boundary nodes to gracefully handle sub-agent failures.
+
+> **Quote of the Day:** "The difference between a prototype and production is rigor — breakpoints, persistent state, and predictable boundaries." *— Aashish Kumar Singh*
