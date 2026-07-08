@@ -3,7 +3,7 @@
 A production-grade LangGraph multi-agent system where a supervisor agent autonomously decomposes tasks and routes them to specialized worker agents — built from scratch, deployed on AWS. No shortcuts.
 
 ## Current Status
-🔨 **Day 7 / 30 Completed**
+🔨 **Day 8 / 30 Completed**
 
 ## Build Progress
 See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
@@ -17,6 +17,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 | Day 5 | Custom manual state graph using LangGraph |
 | Day 6 | Supervisor multi-agent graph with dynamic worker routing |
 | Day 7 | Persistent conversational memory with thread checkpointer |
+| Day 8 | Human-in-the-Loop (HITL) safety gating using breakpoints |
 
 ## Tech Stack
 - **Framework:** LangChain, LangGraph
@@ -55,12 +56,17 @@ GOOGLE_API_KEY=your_key_here
 ## Run
 To run the Day 6 supervisor agent:
 ```bash
-python Learning/day6_supervisor_agent.py
+python Learning/day8_supervisor_agent.py
 ```
 
 To run the Day 7 memory test:
 ```bash
 python Learning/day7_persistent_memory.py
+```
+
+To run the Day 8 memory test:
+```bash
+python Learning/day8_supervisor_agent.py
 ```
 
 ## Notes
