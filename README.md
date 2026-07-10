@@ -3,7 +3,7 @@
 A production-grade LangGraph multi-agent system where a supervisor agent autonomously decomposes tasks and routes them to specialized worker agents — built from scratch, deployed on AWS. No shortcuts.
 
 ## Current Status
-🔨 **Day 8 / 30 Completed**
+🔨 **Day 10 / 30 Completed**
 
 ## Build Progress
 See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
@@ -18,6 +18,8 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 | Day 6 | Supervisor multi-agent graph with dynamic worker routing |
 | Day 7 | Persistent conversational memory with thread checkpointer |
 | Day 8 | Human-in-the-Loop (HITL) safety gating using breakpoints |
+| Day 9 | Web summarizer agent (URL fetch + summarize) |
+| Day 10 | Internet research agent (Wikipedia search + fetch + summarize) |
 
 ## Tech Stack
 - **Framework:** LangChain, LangGraph
@@ -64,11 +66,22 @@ To run the Day 7 memory test:
 python Learning/day7_persistent_memory.py
 ```
 
-To run the Day 8 memory test:
+To run the Day 8 HITL supervisor test:
 ```bash
 python Learning/day8_supervisor_agent.py
+```
+
+To run the Day 9 web summarizer agent:
+```bash
+python Learning/day9_implementation_of_project_web_summarizer_agent.py
+```
+
+To run the Day 10 internet research (easy version) agent:
+```bash
+python Learning/day10_internet_research_summarizer_agent.py
 ```
 
 ## Notes
 - `Learning/.env` is git-ignored — never committed
 - LLM-agnostic design — can swap Gemini for Claude or GPT in one line
+

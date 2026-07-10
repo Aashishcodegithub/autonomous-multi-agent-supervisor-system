@@ -60,7 +60,7 @@ def fetch_url_text(url: str, max_chars: int = 12000) -> str:
     Use this when the user provides a URL and you need to summarize its content.
 
     Args:
-        url: The URL to fetch.
+        url: www.Linkdin.com.
         max_chars: Maximum characters of extracted text to return.
 
     Returns:
@@ -217,7 +217,9 @@ app = workflow.compile(checkpointer=checkpointer)
 if __name__ == "__main__":
     # Use an example URL; replace with your own.
     # Example: a blog post or documentation page.
-    query = "Summarize https://example.com and give 5 key points."
+    # Change this query to your desired URL/task.
+    # Example: query = "Summarize https://www.wikipedia.org and give 5 key points."
+    query = "Summarize https://medium.com/pythoneers/building-ai-agent-systems-with-langgraph-9d85537a6326 give 5 key points."
 
     config = {"configurable": {"thread_id": "day9-web-summarizer"}}
     print(f"🚀 User: {query}")

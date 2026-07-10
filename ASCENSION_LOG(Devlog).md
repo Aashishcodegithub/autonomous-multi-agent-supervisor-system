@@ -119,3 +119,34 @@ No zero days.
 - Dive deeper into dynamic state updates or custom error boundary nodes to gracefully handle sub-agent failures.
 
 > **Quote of the Day:** "The difference between a prototype and production is rigor — breakpoints, persistent state, and predictable boundaries." *— Aashish Kumar Singh*
+
+## Day 9 — July 9, 2026
+**What I built:**
+- Web summarizer worker using a LangGraph mini-supervisor:
+  - `web_worker`: fetches URL HTML, extracts readable text, and produces a web summary.
+  - `writer_worker`: rewrites into a final user-facing answer with key points.
+- Implemented `fetch_url_text` tool:
+  - Cleans noise (`script/style/header/footer/nav`) via BeautifulSoup
+  - Normalizes whitespace and truncates large pages to `max_chars`
+- Added structured routing for the supervisor:
+  - If a URL is detected / user asks to summarize web content => route to `web_worker`
+
+**What I learned:**
+- Web summarization becomes reliable when extraction is deterministic first, then summarization.
+- Agent routing + tool calling needs clear tool docstrings and strict “no invented facts” prompts.
+- Threaded execution (`thread_id`) makes debugging and iteration much easier across runs.
+
+## Day 10 — July 10, 2026
+**What I built:**
+- Internet research (easy version) worker using a two-stage pipeline:
+  - `research_worker`: searches Wikipedia (lightweight “search”), fetches multiple pages, extracts text, and compiles research notes.
+  - `writer_worker`: produces a consolidated final summary with key points + sources.
+- Implemented `wiki_search` tool using Wikipedia API:
+  - Returns `title`, `url`, and `snippet`
+- Implemented best-effort extraction in `fetch_url_text` (same approach as Day 9).
+- Added a simple research-notes prompt format so the writer step is consistent and less error-prone.
+
+**What I learned:**
+- “Easy research” pipelines work surprisingly well when the sources and note format are controlled.
+- Splitting research (collect + extract) from writing (synthesize) reduces hallucination risk and improves output stability.
+- Even without a true search provider (Tavily/SerpAPI), structured Wikipedia search + fetch can validate the agent architecture quickly.
