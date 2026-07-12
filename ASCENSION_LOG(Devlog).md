@@ -150,3 +150,30 @@ No zero days.
 - “Easy research” pipelines work surprisingly well when the sources and note format are controlled.
 - Splitting research (collect + extract) from writing (synthesize) reduces hallucination risk and improves output stability.
 - Even without a true search provider (Tavily/SerpAPI), structured Wikipedia search + fetch can validate the agent architecture quickly.
+**What I learned:**
+- Merging multiple “mini-pipelines” into one supervisor graph makes it easier to scale routing and reuse extraction logic.
+- Keeping worker outputs structured (web summary vs research notes) improves synthesis reliability and reduces hallucination risk.
+## Day 11 — July 11, 2026
+**What I built:**
+- Error handling & graceful failure recovery in agent nodes
+- Timeout mechanisms to prevent hanging on slow API calls
+- Fallback routing when primary worker fails
+- Structured logging for debugging multi-agent flows
+
+**What I learned:**
+- Production agents need explicit error boundaries — try/except at node level
+- Timeouts prevent runaway costs on free tier (429 rate limits, hanging requests)
+- Fallback chains (`primary_worker` → `fallback_worker`) improve reliability
+- Logging state snapshots mid-flow simplifies debugging complex agent interactions
+> **Quote of the Day:** "Errors aren't bugs. They're signals that the system needs guardrails. Every exception caught is a production lesson learned early."
+## Day 12 — July 12, 2026
+**What I built:**
+- A unified “web research supervisor” that merges Day 9 + Day 10 capabilities into one LangGraph graph:
+  - `web_worker`: extracts readable text from a detected URL and produces a 5-key-points summary.
+  - `research_worker`: runs lightweight internet research by searching Wikipedia, fetching multiple pages, then generating research notes.
+  - `writer_worker`: synthesizes a final user-facing response using worker outputs.
+- Implemented a routing supervisor that decides which worker to call based on user text:
+  - If a URL is present => `web_worker`
+  - If the user asks for research => `research_worker`
+  - Always ends in `writer_worker` for final output.
+

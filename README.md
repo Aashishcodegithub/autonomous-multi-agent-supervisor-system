@@ -3,7 +3,7 @@
 A production-grade LangGraph multi-agent system where a supervisor agent autonomously decomposes tasks and routes them to specialized worker agents — built from scratch, deployed on AWS. No shortcuts.
 
 ## Current Status
-🔨 **Day 11 / 30 Completed**
+🔨 **Day 12 / 30 Completed**
 
 ## Build Progress
 See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
@@ -21,6 +21,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 | Day 9 | Web summarizer agent (URL fetch + summarize) |
 | Day 10 | Internet research agent (Wikipedia search + fetch + summarize) |
 | Day 11 | Error handling & agent resilience patterns |
+| Day 12 | Unified web research supervisor (URL summarize + wiki research) |
 
 ## Tech Stack
 - **Framework:** LangChain, LangGraph
@@ -40,6 +41,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 - `Learning/day9_implementation_of_project_web_summarizer_agent.py` — web summarizer agent
 - `Learning/day10_internet_research_summarizer_agent.py` — internet research agent
 - `Learning/day11_error_handling.py` — error handling & resilience (TBD)
+- `Learning/day12_unified_web_research_supervisor_agent.py` — unified web research supervisor
 - `draw_architecture.py` — Python script to render the architecture diagram
 - `architecture.png` — rendered supervisor multi-agent architecture diagram
 - `ASCENSION_LOG(Devlog).md` — daily build log
@@ -86,7 +88,13 @@ To run the Day 10 internet research agent:
 python Learning/day10_internet_research_summarizer_agent.py
 ```
 
+To run the Day 12 unified web research supervisor:
+```bash
+python Learning/day12_unified_web_research_supervisor_agent.py
+```
+
 ## Notes
 - `Learning/.env` is git-ignored — never committed
 - LLM-agnostic design — can swap Gemini for Claude or GPT in one line
 - Daily commits enforced — no zero days
+
