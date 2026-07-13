@@ -3,7 +3,7 @@
 A production-grade LangGraph multi-agent system where a supervisor agent autonomously decomposes tasks and routes them to specialized worker agents — built from scratch, deployed on AWS. No shortcuts.
 
 ## Current Status
-🔨 **Day 12 / 30 Completed**
+🔨 **Day 13 / 30 Completed**
 
 ## Build Progress
 See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
@@ -22,6 +22,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 | Day 10 | Internet research agent (Wikipedia search + fetch + summarize) |
 | Day 11 | Error handling & agent resilience patterns |
 | Day 12 | Unified web research supervisor (URL summarize + wiki research) |
+| Day 13 | Unified research quality fix (Newton’s 1st law + prompt tuning) |
 
 ## Tech Stack
 - **Framework:** LangChain, LangGraph
@@ -42,6 +43,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 - `Learning/day10_internet_research_summarizer_agent.py` — internet research agent
 - `Learning/day11_error_handling.py` — error handling & resilience (TBD)
 - `Learning/day12_unified_web_research_supervisor_agent.py` — unified web research supervisor
+- `Learning/day13_unified_web_research_supervisor_agent.py` — unified research quality fix (Newton’s 1st law + prompt tuning)
 - `draw_architecture.py` — Python script to render the architecture diagram
 - `architecture.png` — rendered supervisor multi-agent architecture diagram
 - `ASCENSION_LOG(Devlog).md` — daily build log
@@ -91,6 +93,11 @@ python Learning/day10_internet_research_summarizer_agent.py
 To run the Day 12 unified web research supervisor:
 ```bash
 python Learning/day12_unified_web_research_supervisor_agent.py
+```
+
+To run the Day 13 unified research quality fix supervisor:
+```bash
+python Learning/day13_unified_web_research_supervisor_agent.py
 ```
 
 ## Notes
