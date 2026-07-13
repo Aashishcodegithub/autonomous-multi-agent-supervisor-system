@@ -177,3 +177,24 @@ No zero days.
   - If the user asks for research => `research_worker`
   - Always ends in `writer_worker` for final output.
 
+## Day 13 — July 13, 2026
+**What I built / debugged:**
+- Debugged Day 12 failure mode: vague “First Law of Motion” intent caused irrelevant Wikipedia results (Kepler / thermodynamics / Buddhism).
+- Updated Day 13 unified research logic to improve prompt/model behavior:
+  - Tightened intent detection so “First Law of Motion” routes to the Newton-first-law quality path.
+  - Strengthened the notes prompt constraints to keep outputs strictly on-topic and to emit `[SOURCES UNRELATED / INSUFFICIENT]` when mismatched.
+- Replaced a blocked Wikipedia REST approach:
+  - Wikipedia REST summary endpoint returned `403 Forbidden` in this environment.
+  - Switched to HTML fetching + extraction of the Wikipedia lead section for Newton’s First Law.
+
+**What I learned:**
+- Wikipedia “search” for underspecified intent is not reliable; direct page targeting + strict synthesis constraints dramatically reduces off-topic contamination.
+- Production-quality agents need both:
+  - routing intent fixes, and
+  - synthesis prompts that enforce “no cross-domain drift”.
+- External API availability (REST vs HTML) must be treated as a first-class reliability concern.
+
+**Testing (critical-path):**
+- Ran Day 13 end-to-end for: `Research: Newton's first law of motion (What is it? main concepts?)`
+- Verified output stayed aligned with Newton’s First Law (Law of Inertia), not other “first laws”.
+
