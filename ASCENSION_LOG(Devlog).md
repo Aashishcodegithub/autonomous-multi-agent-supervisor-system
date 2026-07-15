@@ -179,7 +179,7 @@ No zero days.
 
 ## Day 13 — July 13, 2026
 **What I built / debugged:**
-- Debugged Day 12 failure mode: vague “First Law of Motion” intent caused irrelevant Wikipedia results (Kepler / thermodynamics / Buddhism).
+- Debugged Day 12 failure mode: vague “Prompts” intent caused irrelevant Wikipedia results (Kepler / thermodynamics / Buddhism).
 - Updated Day 13 unified research logic to improve prompt/model behavior:
   - Tightened intent detection so “First Law of Motion” routes to the Newton-first-law quality path.
   - Strengthened the notes prompt constraints to keep outputs strictly on-topic and to emit `[SOURCES UNRELATED / INSUFFICIENT]` when mismatched.

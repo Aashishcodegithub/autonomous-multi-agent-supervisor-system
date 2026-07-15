@@ -3,7 +3,7 @@
 A production-grade LangGraph multi-agent system where a supervisor agent autonomously decomposes tasks and routes them to specialized worker agents — built from scratch, deployed on AWS. No shortcuts.
 
 ## Current Status
-🔨 **Day 13 / 30 Completed**
+🔨 **Day 14 / 30 Completed**
 
 ## Build Progress
 See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
@@ -43,7 +43,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for daily build log.
 - `Learning/day10_internet_research_summarizer_agent.py` — internet research agent
 - `Learning/day11_error_handling.py` — error handling & resilience (TBD)
 - `Learning/day12_unified_web_research_supervisor_agent.py` — unified web research supervisor
-- `Learning/day13_unified_web_research_supervisor_agent.py` — unified research quality fix (Newton’s 1st law + prompt tuning)
+- `Learning/day13_unified_web_research_supervisor_agent.py` — unified research quality fix (prompt tuning)
 - `draw_architecture.py` — Python script to render the architecture diagram
 - `architecture.png` — rendered supervisor multi-agent architecture diagram
 - `ASCENSION_LOG(Devlog).md` — daily build log
@@ -98,6 +98,11 @@ python Learning/day12_unified_web_research_supervisor_agent.py
 To run the Day 13 unified research quality fix supervisor:
 ```bash
 python Learning/day13_unified_web_research_supervisor_agent.py
+```
+
+To run the Day 14 AWS Lambda handler locally (simulated API Gateway event):
+```bash
+python -c "from aws.lambda_handler import lambda_handler; import json; event={'body': json.dumps({'query': \"Research: Newton's first law of motion (What is it? main concepts?)\", 'thread_id': 'local-day14'})}; print(lambda_handler(event, None))"
 ```
 
 ## Notes
