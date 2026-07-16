@@ -179,6 +179,7 @@ No zero days.
 
 ## Day 13 — July 13, 2026
 **What I built / debugged:**
+
 - Debugged Day 12 failure mode: vague “Prompts” intent caused irrelevant Wikipedia results (Kepler / thermodynamics / Buddhism).
 - Updated Day 13 unified research logic to improve prompt/model behavior:
   - Tightened intent detection so “First Law of Motion” routes to the Newton-first-law quality path.
@@ -197,4 +198,22 @@ No zero days.
 **Testing (critical-path):**
 - Ran Day 13 end-to-end for: `Research: Newton's first law of motion (What is it? main concepts?)`
 - Verified output stayed aligned with Newton’s First Law (Law of Inertia), not other “first laws”.
+
+## Day 14 — July 16, 2026 (AWS scaffolding)
+**What I built:**
+- `aws/lambda_handler.py`: API-Gateway compatible Lambda handler that calls the Day 13 LangGraph unified web-research workflow.
+- `aws/README.md`: local simulation + env var instructions.
+
+## Day 15 — July 16, 2026 (Basic RAG demo)
+**What I built:**
+- `Learning/day15_basic_rag_simple_retrieval.py`: runnable RAG demo using lexical/token-overlap retrieval.
+- `Learning/day15_basic_rag.py`: embeddings-based RAG (optional; depends on embedding model availability).
+- Documentation + notes:
+  - `Learning/day15_rag.md`
+  - `Learning/day15_rag_no_embeddings_note.md`
+  - `Learning/rag_requirements_note.md`
+
+**Testing:**
+- Ran `python Learning/day15_basic_rag_simple_retrieval.py` end-to-end and confirmed the output aligns with Newton’s First Law.
+
 
