@@ -1,0 +1,46 @@
+<ENVELOPE>
+ <HEADER>
+  <VERSION>1</VERSION>
+  <TALLYREQUEST>EXPORT</TALLYREQUEST>
+  <TYPE>COLLECTION</TYPE>
+  <ID>PT VTYP PeriodicDetails</ID>
+ </HEADER>
+
+ <BODY>
+  <DESC>
+
+   <STATICVARIABLES>
+    <VOUCHERTYPENAME TYPE="String">{voucher_type}</VOUCHERTYPENAME>
+    <SVCURRENTCOMPANY TYPE="String">{company_name}</SVCURRENTCOMPANY>
+
+    <SVCURRENTDATE TYPE="Date">{current_date}</SVCURRENTDATE>
+    <SVFROMDATE TYPE="Date">{from_date}</SVFROMDATE>
+    <SVTODATE TYPE="Date">{to_date}</SVTODATE>
+
+    <SVPERIODICITY TYPE="String">{periodicity}</SVPERIODICITY>
+   </STATICVARIABLES>
+
+   <TDL>
+    <TDLMESSAGE>
+     <COLLECTION NAME="PT VTYP PeriodicDetails"
+        ISMODIFY="No" ISFIXED="No" ISINITIALIZE="Yes">
+      <TYPE>Period</TYPE>
+      <REPEAT>##SVPeriodicity</REPEAT>
+      <METHOD>PeriodName:$$FullMonthName:$$PeriodDateFrom</METHOD>
+      <METHOD>NettAmount:@@VTYPClsBalance</METHOD>
+     </COLLECTION>
+    </TDLMESSAGE>
+
+    <TDLMESSAGE>
+     <SYSTEM TYPE="Formulae"
+       NAME="VTYPClsBalance"
+       ISMODIFY="Yes">
+      $ClosingBalance:VoucherType:##VoucherTypeName
+     </SYSTEM>
+    </TDLMESSAGE>
+   </TDL>
+
+  </DESC>
+  <DATA/>
+ </BODY>
+</ENVELOPE>

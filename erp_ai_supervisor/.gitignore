@@ -1,0 +1,8 @@
+venv/Lib/
+venv/Lib/site-packages/
+__pycache__/
+*.pyc
+generated_graphs/
+faiss_db/
+tmp_*.png
+tmp_*.json
