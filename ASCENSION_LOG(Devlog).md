@@ -218,17 +218,17 @@ No zero days.
 
 
 
-## Day 17 — July 18, 2026 (Tally Integration Layer — Tools & Data Pipeline)
+## Day 17 — July 18, 2026 (ERP Integration Layer — Tools & Data Pipeline)
 **What I built:**
-- `tools/tally/client.py` + `tools/tally/parser.py`: Low-level Tally HTTP client that sends XML envelope requests and parses XML responses into clean Python dicts. Handles repeated sibling XML tags by converting them to lists instead of overwriting.
-- `tools/tools/get_report_tool.py`: LangChain `@tool` that wraps the Tally client — builds the exact `<ENVELOPE>` XML that matches the working Postman request (`<TALLYREQUEST>Export Data</TALLYREQUEST>`, company-scoped `<SVCurrentCompany>`), then returns parsed dict output.
-- `tools/tools/data_conversion_tool.py`: Universal Tally report normalizer that converts raw report dicts into pandas DataFrames via a standard `{summary, dataframe_id, dataframe_dict}` contract.
+- `tools/erp/client.py` + `tools/erp/parser.py`: Low-level ERP HTTP client that sends XML envelope requests and parses XML responses into clean Python dicts. Handles repeated sibling XML tags by converting them to lists instead of overwriting.
+- `tools/tools/get_report_tool.py`: LangChain `@tool` that wraps the ERP client — builds the exact `<ENVELOPE>` XML that matches the working Postman request (`<TALLYREQUEST>Export Data</TALLYREQUEST>`, company-scoped `<SVCurrentCompany>`), then returns parsed dict output.
+- `tools/tools/data_conversion_tool.py`: Universal ERP report normalizer that converts raw report dicts into pandas DataFrames via a standard `{summary, dataframe_id, dataframe_dict}` contract.
   - Specialised parsers: `parse_sales_register()` (zips `DSPPERIOD` + `DSPACCINFO` → Month/Credit/ClosingBalance rows) and `parse_cash_flow()` (extracts Inflow/Outflow/NetFlow with sign-preserving logic).
   - Smart multi-table discovery: `find_all_tables()` + `merge_parallel_lists()` for Stock Summary's parallel list-of-dicts structure.
-- `tools/tools/company_list_tool.py`: LangChain `@tool` that fetches the live company list from Tally.
+- `tools/tools/company_list_tool.py`: LangChain `@tool` that fetches the live company list from erp.
 
 **What I learned:**
-- Tally's XML API is brittle — any deviation from the exact `<ENVELOPE>` schema returns a silent empty response. Match the Postman request byte-for-byte.
+- ERP's XML API is brittle — any deviation from the exact `<ENVELOPE>` schema returns a silent empty response. Match the Postman request byte-for-byte.
 - Report-specific parsers (Sales Register, Cash Flow) must be isolated from generic table extraction — cross-report contamination produces subtly wrong DataFrames that are hard to debug.
 - A shared `{summary, dataframe_id, dataframe_dict}` contract defined here makes every downstream tool (graph, table, dashboard) composable without coupling.
 
@@ -260,10 +260,10 @@ No zero days.
 - `tools/agents/report_agent.py`: ReAct agent with a `ReportProcessor` stateful wrapper that chains `get_company_list → get_report → data_conversion_tool` while passing the report name through state (avoiding the LLM losing context between tool calls). Exposes `run_report_agent(user_input)` for supervisor routing.
 - `tools/agents/graph_agent.py`: ReAct agent that calls `data_conversion_tool → graph_code_generator → graph_executor` in sequence and returns `{image_path}`. Handles report-name-aware conversion.
 - `tools/agents/table_agent.py`: Deterministic agent wrapping `table_tool` — converts `dataframe_dict` into a Markdown table (bold headers, centre-aligned columns, nanosecond timestamp formatting, 50-char value truncation). No LLM involved.
-- `tools/agents/summarization_agent.py`: ReAct agent that fetches and summarises Tally reports in structured JSON; supports query-aware mode where the summary includes targeted insights for the user's specific question.
-- `tools/agents/dashboard_agent.py`: Agent wrapping `dashboard_tile_fetcher` — fetches live Tally dashboard tiles (Sales/Purchase trend, Cash Flow, Trading) with auto-date filling (default: last 90 days) and voucher-type inference from query keywords.
+- `tools/agents/summarization_agent.py`: ReAct agent that fetches and summarises ERP reports in structured JSON; supports query-aware mode where the summary includes targeted insights for the user's specific question.
+- `tools/agents/dashboard_agent.py`: Agent wrapping `dashboard_tile_fetcher` — fetches live ERP dashboard tiles (Sales/Purchase trend, Cash Flow, Trading) with auto-date filling (default: last 90 days) and voucher-type inference from query keywords.
 - `tools/tools/dashboard_tile_fetcher.py` + `tools/tools/table_tool.py` + `tools/tools/react_wrappers.py`: Supporting tools and JSON-in/JSON-out wrappers that keep agent interfaces uniform regardless of tool internal signatures.
-- `tools/vector_store.py`: FAISS semantic search layer using `all-MiniLM-L6-v2` embeddings to resolve natural language queries → exact Tally report names (e.g., "who owes us money?" → "Bills Receivable"). Auto-initialises index from `report_config.py` on first import.
+- `tools/vector_store.py`: FAISS semantic search layer using `all-MiniLM-L6-v2` embeddings to resolve natural language queries → exact ERP report names (e.g., "who owes us money?" → "Bills Receivable"). Auto-initialises index from `report_config.py` on first import.
 
 **What I learned:**
 - Stateful wrappers (`ReportProcessor`) are the cleanest solution when a ReAct agent needs to pass context (like report name) between sequential tool calls — pure tool chaining loses that state.
@@ -284,9 +284,9 @@ No zero days.
   - `HARDCODED_COMPANY` support for single-company deployments.
 - `tools/api/main.py`: FastAPI wrapper around the supervisor.
   - `POST /api/run` — accepts `{query, company, graph_type}`, runs supervisor, returns `{success, image_base64, summary_text, raw_output}`.
-  - `GET /api/companies` — returns live company list from Tally.
+  - `GET /api/companies` — returns live company list from erp.
   - `GET /api/health` — health check.
-  - Built-in `sanitize_for_json()` to strip `NaN`/`Inf` from supervisor output (Tally data has these), and `humanize_key()` to make Tally's internal column names human-readable.
+  - Built-in `sanitize_for_json()` to strip `NaN`/`Inf` from supervisor output (ERP data has these), and `humanize_key()` to make ERP's internal column names human-readable.
   - PNG images from `graph_executor` are base64-encoded and returned inline — no file serving needed.
 - `tools/ui/new_dashboard.py`: Streamlit chat-style dashboard.
   - Company selector (loaded from `/api/companies`), graph type picker, natural language query input.
@@ -296,8 +296,8 @@ No zero days.
 **What I learned:**
 - A supervisor that understands multi-intent (graph + table + summary in one query) without running extra tools is the hardest prompt engineering challenge in the project — explicit stopping conditions and iteration limits are not optional.
 - `image_base64` in the API response was the right call: it eliminates file-serving complexity and works cleanly across any frontend.
-- `sanitize_for_json()` (converting `NaN`/`Inf` to `None`) is a mandatory step — Tally financial data always has these and FastAPI will crash silently without it.
-- The full system: Tally → XML → Parser → DataFrames → FAISS Resolver → Supervisor → Specialist Agents → FastAPI → Streamlit. Every layer is independently testable and replaceable.
+- `sanitize_for_json()` (converting `NaN`/`Inf` to `None`) is a mandatory step — ERP financial data always has these and FastAPI will crash silently without it.
+- The full system: ERP → XML → Parser → DataFrames → FAISS Resolver → Supervisor → Specialist Agents → FastAPI → Streamlit. Every layer is independently testable and replaceable.
 
 > **Quote of the Day:** "You don't build a system by writing code. You build it by making each layer speak clearly to the next — contracts, not assumptions."
 > *— Aashish Kumar Singh*

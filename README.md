@@ -2,7 +2,7 @@
 
 A production-grade LangGraph multi-agent system where a supervisor agent autonomously decomposes tasks and routes them to specialized worker agents — built from scratch, deployed on AWS. No shortcuts.
 
-This project implements a complete agentic pipeline that takes natural language queries for financial reports or dashboard tiles, detects intent, routes to appropriate specialist agents, and generates data, graphs, and tables from Tally ERP.
+This project implements a complete agentic pipeline that takes natural language queries for financial reports or dashboard tiles, detects intent, routes to appropriate specialist agents, and generates data, graphs, and tables from ERP ERP.
 
 ---
 
@@ -21,7 +21,7 @@ This project implements a complete agentic pipeline that takes natural language 
 ---
 
 ## Current Status
-🔨 **Day 20 / 30 Completed** — Full production system live (Tally pipeline, agents, FAISS vector DB, FastAPI backend, Streamlit UI).
+🔨 **Day 20 / 30 Completed** — Full production system live (ERP pipeline, agents, FAISS vector DB, FastAPI backend, Streamlit UI).
 
 ---
 
@@ -89,7 +89,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for the detailed dail
 | Day 12 | Unified web research supervisor (URL summarize + wiki research) |
 | Day 13 | Unified research quality fix (Newton’s 1st law + prompt tuning) |
 | Day 14-15 | Basic RAG demo & AWS Lambda scaffolding |
-| Day 17 | Tally Integration Layer (Tools & Data Pipeline) |
+| Day 17 | ERP Integration Layer (Tools & Data Pipeline) |
 | Day 18 | AI Chart Generator + Sandboxed Executor |
 | Day 19 | Specialist Agents (Report, Graph, Table, Summary, Dashboard) |
 | Day 20 | Supervisor Agent + FastAPI + Streamlit Dashboard — Full System Live |
@@ -129,7 +129,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for the detailed dail
 │   ├── generated_graphs/        # Generated graph images (temp)
 │   ├── supervisor/              
 │   │   └── supervisor_agent.py  # Main supervisor routing logic
-│   ├── tally/                   # Tally ERP integration layer
+│   ├── erp/                   # ERP ERP integration layer
 │   │   ├── client.py
 │   │   ├── parser.py
 │   │   └── xml_templates/       
