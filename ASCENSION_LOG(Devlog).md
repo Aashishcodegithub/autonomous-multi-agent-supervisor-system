@@ -220,12 +220,12 @@ No zero days.
 
 ## Day 17 — July 18, 2026 (ERP Integration Layer — Tools & Data Pipeline)
 **What I built:**
-- `tools/erp/client.py` + `tools/erp/parser.py`: Low-level ERP HTTP client that sends XML envelope requests and parses XML responses into clean Python dicts. Handles repeated sibling XML tags by converting them to lists instead of overwriting.
-- `tools/tools/get_report_tool.py`: LangChain `@tool` that wraps the ERP client — builds the exact `<ENVELOPE>` XML that matches the working Postman request (`<TALLYREQUEST>Export Data</TALLYREQUEST>`, company-scoped `<SVCurrentCompany>`), then returns parsed dict output.
-- `tools/tools/data_conversion_tool.py`: Universal ERP report normalizer that converts raw report dicts into pandas DataFrames via a standard `{summary, dataframe_id, dataframe_dict}` contract.
+- `erp_ai_supervisor/erp/client.py` + `erp_ai_supervisor/erp/parser.py`: Low-level ERP HTTP client that sends XML envelope requests and parses XML responses into clean Python dicts. Handles repeated sibling XML tags by converting them to lists instead of overwriting.
+- `erp_ai_supervisor/erp_ai_supervisor/get_report_tool.py`: LangChain `@tool` that wraps the ERP client — builds the exact `<ENVELOPE>` XML that matches the working Postman request (`<TALLYREQUEST>Export Data</TALLYREQUEST>`, company-scoped `<SVCurrentCompany>`), then returns parsed dict output.
+- `erp_ai_supervisor/erp_ai_supervisor/data_conversion_tool.py`: Universal ERP report normalizer that converts raw report dicts into pandas DataFrames via a standard `{summary, dataframe_id, dataframe_dict}` contract.
   - Specialised parsers: `parse_sales_register()` (zips `DSPPERIOD` + `DSPACCINFO` → Month/Credit/ClosingBalance rows) and `parse_cash_flow()` (extracts Inflow/Outflow/NetFlow with sign-preserving logic).
   - Smart multi-table discovery: `find_all_tables()` + `merge_parallel_lists()` for Stock Summary's parallel list-of-dicts structure.
-- `tools/tools/company_list_tool.py`: LangChain `@tool` that fetches the live company list from erp.
+- `erp_ai_supervisor/erp_ai_supervisor/company_list_tool.py`: LangChain `@tool` that fetches the live company list from erp.
 
 **What I learned:**
 - ERP's XML API is brittle — any deviation from the exact `<ENVELOPE>` schema returns a silent empty response. Match the Postman request byte-for-byte.
@@ -237,12 +237,12 @@ No zero days.
 
 ## Day 18 — July 19, 2026 (AI Chart Generator + Sandboxed Executor)
 **What I built:**
-- `tools/tools/graph_code_generator_tool.py`: LangChain `@tool` powered by Gemini (`gemini-2.0-flash-exp`) that generates publication-ready `matplotlib` code directly from a DataFrame summary dict.
+- `erp_ai_supervisor/erp_ai_supervisor/graph_code_generator_tool.py`: LangChain `@tool` powered by Gemini (`gemini-2.0-flash-exp`) that generates publication-ready `matplotlib` code directly from a DataFrame summary dict.
   - **Column analysis pre-pass**: classifies every column as "has data" vs "all NULL" before prompting — the LLM is explicitly forbidden from referencing empty columns.
   - **Report-specific constraint injection**: dynamic prompt blocks for Bills Receivable (count-per-party bar), Sales Register (dual subplot), Cash Flow (grouped bar with signed NetFlow annotations), and large datasets (auto-filter to top-20 parties when row count > 50).
   - **Strict output specification**: prompt bans all imports beyond `numpy`/`matplotlib`, bans `pandas`, markdown fences, and the word "python"; `temperature=0.2` to suppress hallucinated variable names.
   - **Signed negative value strategy**: `abs()` heights + red colour for negative bars, annotated with original signed values — financial data renders without hiding signs.
-- `tools/tools/graph_executor_tool.py`: LangChain `@tool` that runs LLM-generated chart code via a two-layer security model.
+- `erp_ai_supervisor/erp_ai_supervisor/graph_executor_tool.py`: LangChain `@tool` that runs LLM-generated chart code via a two-layer security model.
   - **Layer 1 — AST safety scan** (`is_code_safe()`): walks the AST before execution; blocks `exec`, `eval`, `open`, `os`, `sys`, `subprocess`, dunder attribute access, and any import beyond the safe set.
   - **Layer 2 — Subprocess sandbox**: even after passing AST, code runs in a fresh child process (`timeout=5s`). The DataFrame is serialised to a temp JSON file to avoid shell-escaping bugs; the runner loads it, plots, and saves PNG to `generated_graphs/`. Temp files are cleaned up afterwards.
   - `clean_dataframe()`: strips all-null columns, coerces numeric types, handles edge cases before execution.
@@ -257,13 +257,13 @@ No zero days.
 
 ## Day 19 — July 19, 2026 (Specialist Agents — Report, Graph, Table, Summary, Dashboard)
 **What I built:**
-- `tools/agents/report_agent.py`: ReAct agent with a `ReportProcessor` stateful wrapper that chains `get_company_list → get_report → data_conversion_tool` while passing the report name through state (avoiding the LLM losing context between tool calls). Exposes `run_report_agent(user_input)` for supervisor routing.
-- `tools/agents/graph_agent.py`: ReAct agent that calls `data_conversion_tool → graph_code_generator → graph_executor` in sequence and returns `{image_path}`. Handles report-name-aware conversion.
-- `tools/agents/table_agent.py`: Deterministic agent wrapping `table_tool` — converts `dataframe_dict` into a Markdown table (bold headers, centre-aligned columns, nanosecond timestamp formatting, 50-char value truncation). No LLM involved.
-- `tools/agents/summarization_agent.py`: ReAct agent that fetches and summarises ERP reports in structured JSON; supports query-aware mode where the summary includes targeted insights for the user's specific question.
-- `tools/agents/dashboard_agent.py`: Agent wrapping `dashboard_tile_fetcher` — fetches live ERP dashboard tiles (Sales/Purchase trend, Cash Flow, Trading) with auto-date filling (default: last 90 days) and voucher-type inference from query keywords.
-- `tools/tools/dashboard_tile_fetcher.py` + `tools/tools/table_tool.py` + `tools/tools/react_wrappers.py`: Supporting tools and JSON-in/JSON-out wrappers that keep agent interfaces uniform regardless of tool internal signatures.
-- `tools/vector_store.py`: FAISS semantic search layer using `all-MiniLM-L6-v2` embeddings to resolve natural language queries → exact ERP report names (e.g., "who owes us money?" → "Bills Receivable"). Auto-initialises index from `report_config.py` on first import.
+- `erp_ai_supervisor/agents/report_agent.py`: ReAct agent with a `ReportProcessor` stateful wrapper that chains `get_company_list → get_report → data_conversion_tool` while passing the report name through state (avoiding the LLM losing context between tool calls). Exposes `run_report_agent(user_input)` for supervisor routing.
+- `erp_ai_supervisor/agents/graph_agent.py`: ReAct agent that calls `data_conversion_tool → graph_code_generator → graph_executor` in sequence and returns `{image_path}`. Handles report-name-aware conversion.
+- `erp_ai_supervisor/agents/table_agent.py`: Deterministic agent wrapping `table_tool` — converts `dataframe_dict` into a Markdown table (bold headers, centre-aligned columns, nanosecond timestamp formatting, 50-char value truncation). No LLM involved.
+- `erp_ai_supervisor/agents/summarization_agent.py`: ReAct agent that fetches and summarises ERP reports in structured JSON; supports query-aware mode where the summary includes targeted insights for the user's specific question.
+- `erp_ai_supervisor/agents/dashboard_agent.py`: Agent wrapping `dashboard_tile_fetcher` — fetches live ERP dashboard tiles (Sales/Purchase trend, Cash Flow, Trading) with auto-date filling (default: last 90 days) and voucher-type inference from query keywords.
+- `erp_ai_supervisor/erp_ai_supervisor/dashboard_tile_fetcher.py` + `erp_ai_supervisor/erp_ai_supervisor/table_tool.py` + `erp_ai_supervisor/erp_ai_supervisor/react_wrappers.py`: Supporting tools and JSON-in/JSON-out wrappers that keep agent interfaces uniform regardless of tool internal signatures.
+- `erp_ai_supervisor/vector_store.py`: FAISS semantic search layer using `all-MiniLM-L6-v2` embeddings to resolve natural language queries → exact ERP report names (e.g., "who owes us money?" → "Bills Receivable"). Auto-initialises index from `report_config.py` on first import.
 
 **What I learned:**
 - Stateful wrappers (`ReportProcessor`) are the cleanest solution when a ReAct agent needs to pass context (like report name) between sequential tool calls — pure tool chaining loses that state.
@@ -275,20 +275,20 @@ No zero days.
 
 ## Day 20 — July 20, 2026 (Supervisor Agent + FastAPI + Streamlit Dashboard — Full System Live)
 **What I built:**
-- `tools/supervisor/supervisor_agent.py`: Production-grade ReAct Supervisor Agent — the brain of the entire system.
+- `erp_ai_supervisor/supervisor/supervisor_agent.py`: Production-grade ReAct Supervisor Agent — the brain of the entire system.
   - Routes natural language queries to `report_agent`, `summary_agent`, `graph_agent`, `table_agent`, or `dashboard_agent` based on deep semantic intent classification (not keyword matching).
   - Supports **multi-intent chaining**: a single query like "show me a table and graph of my stock" triggers `table_agent → graph_agent` in sequence, merging outputs into one response.
   - **Vector DB-backed report resolution** runs before routing — `resolve_with_vector_db()` enriches the input JSON with the exact report name before the supervisor sees it.
   - **Anti-loop mechanism**: hardcoded rule — if any tool returns an `error` key, output `Final Answer` immediately, no retries. `max_iterations=8` prevents runaway multi-tool spirals.
   - Intermediate step merger: collects all `(action, observation)` pairs and merges tool outputs into a single response dict before returning.
   - `HARDCODED_COMPANY` support for single-company deployments.
-- `tools/api/main.py`: FastAPI wrapper around the supervisor.
+- `erp_ai_supervisor/api/main.py`: FastAPI wrapper around the supervisor.
   - `POST /api/run` — accepts `{query, company, graph_type}`, runs supervisor, returns `{success, image_base64, summary_text, raw_output}`.
   - `GET /api/companies` — returns live company list from erp.
   - `GET /api/health` — health check.
   - Built-in `sanitize_for_json()` to strip `NaN`/`Inf` from supervisor output (ERP data has these), and `humanize_key()` to make ERP's internal column names human-readable.
   - PNG images from `graph_executor` are base64-encoded and returned inline — no file serving needed.
-- `tools/ui/new_dashboard.py`: Streamlit chat-style dashboard.
+- `erp_ai_supervisor/ui/new_dashboard.py`: Streamlit chat-style dashboard.
   - Company selector (loaded from `/api/companies`), graph type picker, natural language query input.
   - Displays graphs (decoded from base64), Markdown summaries, and data tables in a reverse-chronological chat history (last 10 queries).
   - Session state preserves conversation across interactions.

@@ -115,7 +115,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for the detailed dail
 │   ├── day1_llm_call.py
 │   ├── day6_supervisor_agent.py
 │   └── ...
-├── tools/                       # Core Production System
+├── erp_ai_supervisor/                       # Core Production System
 │   ├── agents/                  # Agent implementations
 │   │   ├── dashboard_agent.py   # Dashboard tile pipeline agent
 │   │   ├── graph_agent.py       # Graph generation agent
@@ -133,7 +133,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for the detailed dail
 │   │   ├── client.py
 │   │   ├── parser.py
 │   │   └── xml_templates/       
-│   ├── tools/                   # LangChain tools
+│   ├── erp_ai_supervisor/                   # LangChain tools
 │   │   ├── company_list_tool.py
 │   │   ├── dashboard_tile_fetcher.py
 │   │   ├── data_conversion_tool.py
@@ -164,9 +164,9 @@ source .venv/bin/activate
 ```
 
 2. **Install dependencies:**
-The project dependencies are listed in `tools/requirements.txt` with pinned versions for reproducibility.
+The project dependencies are listed in `erp_ai_supervisor/requirements.txt` with pinned versions for reproducibility.
 ```bash
-cd tools
+cd erp_ai_supervisor
 pip install -r requirements.txt
 ```
 
@@ -185,14 +185,14 @@ GEMINI_API_KEY=your_key_here
 
 ### 1. Start the FastAPI Backend
 ```bash
-cd tools
+cd erp_ai_supervisor
 uvicorn api.main:app --reload --port 8000
 ```
 
 ### 2. Start the Streamlit Dashboard
 In a new terminal window:
 ```bash
-cd tools
+cd erp_ai_supervisor
 streamlit run ui/new_dashboard.py
 ```
 
@@ -240,7 +240,7 @@ HARDCODED_COMPANY=Modi Chemplast Materials Pvt Ltd
 ```
 
 **Method 2: Direct Code Configuration**
-Edit `tools/supervisor/supervisor_agent.py` and set:
+Edit `erp_ai_supervisor/supervisor/supervisor_agent.py` and set:
 ```python
 HARDCODED_COMPANY = "Modi Chemplast Materials Pvt Ltd"
 ```
