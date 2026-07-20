@@ -1,6 +1,6 @@
 # Autonomous Multi-Agent Supervisor System
 
-A production-grade LangGraph multi-agent system where a supervisor agent autonomously decomposes tasks and routes them to specialized worker agents — built from scratch, deployed on AWS. No shortcuts.
+A production-grade LangGraph multi-agent system where a supervisor agent autonomously decomposes tasks and routes them to specialized worker agents — built from scratch. No shortcuts.
 
 This project implements a complete agentic pipeline that takes natural language queries for financial reports or dashboard tiles, detects intent, routes to appropriate specialist agents, and generates data, graphs, and tables from ERP ERP.
 
@@ -88,7 +88,7 @@ See [ASCENSION_LOG(Devlog).md](./ASCENSION_LOG(Devlog).md) for the detailed dail
 | Day 11 | Error handling & agent resilience patterns |
 | Day 12 | Unified web research supervisor (URL summarize + wiki research) |
 | Day 13 | Unified research quality fix (Newton’s 1st law + prompt tuning) |
-| Day 14-15 | Basic RAG demo & AWS Lambda scaffolding |
+| Day 14-15 | Basic RAG demo & Lambda scaffolding |
 | Day 17 | ERP Integration Layer (Tools & Data Pipeline) |
 | Day 18 | AI Chart Generator + Sandboxed Executor |
 | Day 19 | Specialist Agents (Report, Graph, Table, Summary, Dashboard) |

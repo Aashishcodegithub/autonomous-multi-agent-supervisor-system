@@ -1,10 +1,10 @@
 # ASCENSION LOG — Autonomous Multi-Agent Supervisor System
 > 30 days. One project. Real impact.
-> Built from scratch. Deployed on AWS. No shortcuts.
+> Built from scratch. No shortcuts.
 ## The Goal
 A production-grade LangGraph multi-agent system where a supervisor agent 
 autonomously decomposes tasks and routes them to specialized workers — 
-callable via API, deployed on AWS, battle-tested with real use cases.
+callable via API, battle-tested with real use cases.
 ## The Rule
 Every session = a commit. Every day = an entry. 
 No zero days.
@@ -199,7 +199,7 @@ No zero days.
 - Ran Day 13 end-to-end for: `Research: Newton's first law of motion (What is it? main concepts?)`
 - Verified output stayed aligned with Newton’s First Law (Law of Inertia), not other “first laws”.
 
-## Day 14 — July 16, 2026 (AWS scaffolding)
+## Day 14 — July 16, 2026 (Lambda scaffolding)
 **What I built:**
 - `aws/lambda_handler.py`: API-Gateway compatible Lambda handler that calls the Day 13 LangGraph unified web-research workflow.
 - `aws/README.md`: local simulation + env var instructions.
